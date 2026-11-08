@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#eaece7" />
+    <meta name="description" content="Penlo — a quiet corner of the web." />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'; upgrade-insecure-requests" />
+    <title>Penlo — A Quiet Corner of the Web</title>
+    <style>
+      :root { color-scheme: light; --ink: #25332f; --muted: #64716b; --paper: #eaece7; --line: rgba(39,63,54,.17); }
+      * { box-sizing: border-box; }
+      html { min-height: 100%; }
+      body {
+        margin: 0;
+        min-height: 100svh;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .page {
+        min-height: 100svh;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        isolation: isolate;
+      }
+      .page::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        background: radial-gradient(circle at 73% 48%, #f4f4eb 0, #eaece7 37%, #e2e8e1 88%);
+      }
+      header, footer { padding: 38px clamp(28px, 6vw, 96px); }
+      header { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+      .brand { display: flex; gap: 11px; align-items: center; color: var(--ink); text-decoration: none; }
+      .brand-mark { display: grid; place-items: center; width: 35px; height: 35px; border-radius: 50%; background: var(--ink); color: #f6f8f1; font: 600 23px/1 Georgia, serif; padding-bottom: 4px; }
+      .brand-name { font-weight: 640; letter-spacing: -.045em; font-size: 24px; }
+      .header-note { color: #78837d; letter-spacing: .18em; text-transform: uppercase; font-size: 10px; font-weight: 650; }
+      main {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(320px, .95fr);
+        align-items: center;
+        gap: 4vw;
+        padding: clamp(32px, 5vw, 74px) clamp(28px, 9.6vw, 155px) clamp(54px, 7vw, 90px);
+      }
+      .copy { max-width: 630px; position: relative; z-index: 1; }
+      .eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 30px; font-size: 12px; font-weight: 650; letter-spacing: .18em; color: #698076; text-transform: uppercase; }
+      .eyebrow::before { content: ""; width: 30px; height: 1px; background: #82988a; }
+      h1 { margin: 0; max-width: 650px; font: 400 clamp(60px, 6vw, 104px)/.99 Georgia, "Times New Roman", serif; letter-spacing: -.063em; }
+      h1 em { font-style: italic; color: #688376; }
+      .lead { max-width: 440px; color: var(--muted); margin: 32px 0 42px; font-size: clamp(16px, 1.35vw, 19px); line-height: 1.7; font-weight: 350; }
+      .small-line { display: flex; align-items: center; gap: 14px; color: #789084; font-size: 12px; letter-spacing: .04em; }
+      .small-line .dot { width: 7px; height: 7px; border-radius: 50%; background: #8caa91; box-shadow: 0 0 0 6px #8caa911b; }
+      .art { min-height: 520px; width: 100%; position: relative; display: grid; place-items: center; }
+      .art::before {
+        content: ""; position: absolute; width: min(40vw, 570px); aspect-ratio: 1;
+        border-radius: 50%; background: #d1dbd0; filter: blur(80px); opacity: .52;
+      }
+      .disc {
+        position: relative; width: min(36vw, 520px); aspect-ratio: 1; border-radius: 50%;
+        background: radial-gradient(circle at 35% 25%, #ebeee1, #d3dfd2 34%, #88a69a 71%, #557c70 100%);
+        box-shadow: inset -29px -46px 70px #34594a44, inset 23px 17px 55px #ffffef99, 0 40px 100px #456c5e22;
+        animation: float 13s ease-in-out infinite;
+      }
+      .disc::before, .disc::after { content: ""; position: absolute; inset: 13%; border: 1px solid rgba(243,249,236,.53); border-radius: 50%; transform: rotate(-24deg) scaleX(.78); }
+      .disc::after { inset: 3%; border-color: rgba(31,75,58,.22); transform: rotate(34deg) scaleX(.62); }
+      .orbit { position: absolute; border: 1px solid #6a8c7b44; width: min(46vw, 660px); aspect-ratio: 1; border-radius: 50%; transform: rotate(-27deg) scaleY(.69); }
+      .orbit.two { width: min(50vw, 720px); transform: rotate(43deg) scaleY(.58); border-color: #6a8c7b2b; }
+      .grain { pointer-events: none; position: absolute; inset: 0; opacity: .17; z-index: 3; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E"); }
+      footer { border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; color: #77847d; font-size: 12px; letter-spacing: .02em; }
+      .footer-rule { display: flex; align-items: center; gap: 10px; }
+      .footer-rule::before { content: ""; width: 18px; height: 1px; background: #8d9c91; }
+      @keyframes float { 0%,100% {transform: translateY(0)} 50% {transform: translateY(-13px)} }
+      @media (max-width: 900px) {
+        main { grid-template-columns: 1fr; gap: 0; padding: 70px 7vw 35px; }
+        h1 { max-width: 610px; }
+        .art { min-height: 350px; order: -1; margin-top: -25px; }
+        .disc { width: min(62vw, 360px); }
+        .orbit { width: min(78vw, 470px); }
+        .orbit.two { width: min(86vw, 530px); }
+        .eyebrow { margin-bottom: 21px; }
+      }
+      @media (max-width: 540px) {
+        header, footer { padding: 25px 25px; }
+        .header-note { display: none; }
+        main { padding: 20px 28px 65px; }
+        h1 { font-size: clamp(56px, 14vw, 76px); }
+        .lead { margin: 25px 0 32px; }
+        .art { min-height: 315px; }
+        .disc { width: min(61vw, 300px); }
+        .orbit { width: 80vw; }
+        .orbit.two { width: 88vw; }
+      }
+      @media (prefers-reduced-motion: reduce) { .disc { animation: none; } }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <div class="brand" aria-label="Penlo home"><span class="brand-mark" aria-hidden="true">p</span><span class="brand-name">penlo.</span></div>
+        <span class="header-note">A space to pause</span>
+      </header>
+      <main>
+        <section class="copy" aria-labelledby="headline">
+          <div class="eyebrow">Welcome to Penlo</div>
+          <h1 id="headline">A quieter corner of the <em>web.</em></h1>
+          <p class="lead">A simple home for this domain, and a little space for whatever comes next. Nothing to sign up for. Nothing to keep up with.</p>
+          <div class="small-line"><span class="dot" aria-hidden="true"></span><span>Intentionally simple.</span></div>
+        </section>
+        <div class="art" aria-hidden="true">
+          <div class="orbit"></div><div class="orbit two"></div><div class="disc"></div>
+        </div>
+      </main>
+      <footer>
+        <span>© 2026 Penlo</span>
+        <span class="footer-rule">No trackers. No distractions.</span>
+      </footer>
+      <div class="grain" aria-hidden="true"></div>
+    </div>
+  </body>
+</html>
